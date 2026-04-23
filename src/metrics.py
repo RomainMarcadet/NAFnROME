@@ -85,3 +85,36 @@ naf_orphan_codes_gauge = Gauge(
     'Nombre de codes NAF non référencés par aucune ligne ROME — objectif : diminue',
     registry=REGISTRY,
 )
+
+# ─── Métriques ingestion ChromaDB ─────────────────────────────────────────────
+
+ingestion_total_documents = Gauge(
+    'ingestion_total_documents',
+    'Nombre total de documents ingérés dans ChromaDB',
+    registry=REGISTRY,
+)
+ingestion_total_chunked = Gauge(
+    'ingestion_total_chunked',
+    'Nombre de documents ayant nécessité un chunking (> max_tokens)',
+    registry=REGISTRY,
+)
+ingestion_chunked_ratio = Gauge(
+    'ingestion_chunked_ratio',
+    'Ratio (%) de documents chunkés',
+    registry=REGISTRY,
+)
+ingestion_token_overflow_count = Gauge(
+    'ingestion_token_overflow_count',
+    'Nombre de documents dépassant max_tokens avant chunking',
+    registry=REGISTRY,
+)
+ingestion_duration_seconds = Gauge(
+    'ingestion_duration_seconds',
+    'Durée totale de l\'ingestion en secondes',
+    registry=REGISTRY,
+)
+ingestion_avg_batch_duration_ms = Gauge(
+    'ingestion_avg_batch_duration_ms',
+    'Latence moyenne par batch en millisecondes',
+    registry=REGISTRY,
+)
