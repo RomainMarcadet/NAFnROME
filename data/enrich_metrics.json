@@ -1,0 +1,9 @@
+{
+  "timestamp": "2026-04-23T17:35:22.809797+00:00",
+  "naf_total": 732,
+  "naf_enriched_count": 0,
+  "naf_unchanged_count": 732,
+  "naf_avg_text_length_before": 619.93,
+  "naf_avg_text_length_after": 619.93,
+  "naf_coverage_referenced_by_rome": 82.92
+}

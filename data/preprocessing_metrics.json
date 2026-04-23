@@ -1,0 +1,17 @@
+{
+  "timestamp": "2026-04-23T17:46:51.224191+00:00",
+  "corpus_total_rows": 8030,
+  "corpus_duplicates_removed": 3828,
+  "corpus_rome_rows": 7298,
+  "corpus_naf_rows": 732,
+  "corpus_text_length_mean": 141.4,
+  "corpus_text_length_p90": 205.0,
+  "corpus_text_length_p99": 1126.55,
+  "corpus_text_length_max": 1500,
+  "corpus_token_overflow_128": 473,
+  "corpus_token_overflow_128_ratio": 5.89,
+  "quality_score": 94.11,
+  "naf_orphan_count": 125,
+  "naf_coverage_rome_pct": 82.92,
+  "preprocessing_duration_seconds": 0.387
+}
