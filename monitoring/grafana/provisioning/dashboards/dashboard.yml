@@ -1,9 +1,35 @@
 apiVersion: 1
 
 providers:
-  - name: NAFnROME
+
+  - name: NAFnROME-Main
     type: file
+    folder: "NAF ROME"
     disableDeletion: true
     updateIntervalSeconds: 30
     options:
-      path: /var/lib/grafana/dashboards
+      path: /var/lib/grafana/dashboards/main
+
+  - name: Sophie-Metier
+    type: file
+    folder: "Sophie — Métier"
+    disableDeletion: true
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards/sophie
+
+  - name: Karim-Usage
+    type: file
+    folder: "Karim — Usage"
+    disableDeletion: true
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards/karim
+
+  - name: Thomas-Infrastructure
+    type: file
+    folder: "Thomas — Infrastructure"
+    disableDeletion: true
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/grafana/dashboards/thomas
