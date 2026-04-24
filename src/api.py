@@ -17,12 +17,15 @@ via le context manager lifespan (FastAPI >= 0.93).
 
 import logging
 import time
+import csv
 from contextlib import asynccontextmanager
 from datetime import datetime, timezone
+from pathlib import Path
 
 import chromadb
 from fastapi import FastAPI, HTTPException, Request
-from fastapi.responses import Response
+from fastapi.responses import FileResponse, Response
+from fastapi.staticfiles import StaticFiles
 from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 from pydantic import BaseModel
 from sentence_transformers import SentenceTransformer
@@ -50,9 +53,34 @@ logger = logging.getLogger(__name__)
 COLLECTION_NAME = 'naf_rome_v2'
 CHROMA_PATH     = './chroma_db'
 MODEL_NAME      = 'paraphrase-multilingual-MiniLM-L12-v2'
+FRONTEND_DIR    = Path(__file__).resolve().parent / 'frontend'
+CORPUS_PATH     = Path('data/corpus_final.csv')
 
 # Boost par défaut utilisé quand boost=true
 FAMILY_BOOST = {"J": 1.2, "D": 1.1, "H": 0.85}
+
+
+def _load_naf_descriptions(path: Path) -> dict[str, str]:
+    """Charge un mapping code NAF -> description longue depuis le corpus local."""
+    descriptions: dict[str, str] = {}
+
+    if not path.exists():
+        logger.warning("Corpus introuvable pour les descriptions NAF : %s", path)
+        return descriptions
+
+    with path.open(newline='', encoding='utf-8') as handle:
+        reader = csv.DictReader(handle)
+        for row in reader:
+            code_naf = str(row.get('code_naf') or '').strip()
+            code_rome = str(row.get('code_rome') or '').strip()
+            text = str(row.get('text_to_encode') or '').strip()
+
+            # Les lignes NAF-only portent la description la plus utile pour le détail.
+            if code_naf and not code_rome and text and code_naf not in descriptions:
+                descriptions[code_naf] = text
+
+    logger.info("Descriptions NAF chargées : %d codes", len(descriptions))
+    return descriptions
 
 
 # ─── Lifespan ────────────────────────────────────────────────────────────────
@@ -62,6 +90,7 @@ async def lifespan(app: FastAPI):
     """Charge le modèle et la collection une seule fois au démarrage."""
     logger.info("Démarrage — chargement du modèle : %s", MODEL_NAME)
     app.state.model = SentenceTransformer(MODEL_NAME)
+    app.state.naf_descriptions = _load_naf_descriptions(CORPUS_PATH)
 
     client = chromadb.PersistentClient(path=CHROMA_PATH)
     app.state.collection = client.get_collection(COLLECTION_NAME)
@@ -74,6 +103,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="NAFnROME API", version="1.0.0", lifespan=lifespan)
+app.mount("/static", StaticFiles(directory=FRONTEND_DIR), name="static")
 
 
 # ─── Helper partagé search → réponse ─────────────────────────────────────────
@@ -112,6 +142,11 @@ def _search_response(
 
 
 # ─── Endpoints ───────────────────────────────────────────────────────────────
+
+@app.get("/", include_in_schema=False)
+async def frontend_index():
+    """Sert l'application frontend statique."""
+    return FileResponse(FRONTEND_DIR / "index.html")
 
 @app.get("/health")
 async def health(request: Request):
@@ -157,6 +192,7 @@ async def rome_by_code(request: Request, code: str):
     """
     t0         = time.perf_counter()
     collection = request.app.state.collection
+    naf_descriptions = request.app.state.naf_descriptions
 
     raw = collection.get(
         where={"code_rome": {"$eq": code}},
@@ -184,6 +220,13 @@ async def rome_by_code(request: Request, code: str):
     naf_codes    = list(dict.fromkeys(
         m.get("code_naf", "") for m in unique_docs if m.get("code_naf")
     ))
+    naf_details = [
+        {
+            "code_naf": naf_code,
+            "description": naf_descriptions.get(naf_code, ""),
+        }
+        for naf_code in naf_codes
+    ]
 
     return {
         "code_rome":         code,
@@ -191,6 +234,7 @@ async def rome_by_code(request: Request, code: str):
         "famille":           famille,
         "appellations_count": len(unique_docs),
         "naf_codes":         naf_codes,
+        "naf_details":       naf_details,
         "timestamp":         datetime.now(timezone.utc).isoformat(),
         "latency_ms":        round((time.perf_counter() - t0) * 1000, 1),
     }

@@ -3,227 +3,318 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>JOB · ROME × NAF · Moteur sémantique</title>
-  <meta name="description" content="Moteur de recherche sémantique ROME et NAF — correspondance emploi/secteur d'activité." />
+  <title>JOB | Recherche ROME et NAF</title>
+  <meta
+    name="description"
+    content="JOB aide à identifier les correspondances ROME et NAF les plus pertinentes à partir d'une description métier ou activité."
+  />
+  <meta
+    name="keywords"
+    content="JOB, code ROME, code NAF, recherche métier, recherche activité, France Travail, INSEE"
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:title" content="JOB | Recherche ROME et NAF" />
+  <meta
+    property="og:description"
+    content="Décrivez un métier ou une activité et obtenez des correspondances ROME et NAF exploitables rapidement."
+  />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="JOB | Recherche ROME et NAF" />
+  <meta
+    name="twitter:description"
+    content="Un moteur de recherche métier centré sur l'identification des bons codes ROME et NAF."
+  />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="/static/style.css" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "JOB",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "inLanguage": "fr",
+      "description": "Moteur de recherche métier pour identifier des correspondances ROME et NAF."
+    }
+  </script>
 </head>
 <body>
-
-  <!-- ═══════════════════════════════════════════════════════════════ HEADER -->
-  <header class="header" role="banner">
-    <div class="header__inner">
-
-      <div class="header__brand">
-        <span class="header__logo" aria-label="JOB">JOB<span class="header__dot" aria-hidden="true"></span></span>
-        <span class="header__tagline">ROME × NAF · Moteur sémantique</span>
-      </div>
-
-      <div class="header__controls">
-        <!-- Toggle mode Sophie / Karim -->
-        <div class="mode-toggle" role="group" aria-label="Sélection du mode d'affichage">
-          <button
-            id="btn-mode-sophie"
-            class="mode-toggle__btn mode-toggle__btn--active"
-            aria-pressed="true"
-            aria-label="Mode Sophie : affichage expert avec codes ROME et NAF"
-            data-mode="sophie"
-          >Sophie</button>
-          <button
-            id="btn-mode-karim"
-            class="mode-toggle__btn"
-            aria-pressed="false"
-            aria-label="Mode Karim : affichage simplifié en langage courant"
-            data-mode="karim"
-          >Karim</button>
-        </div>
-
-        <!-- Badge RGPD -->
-        <span class="badge-rgpd" aria-label="Modèle local, conformité RGPD native">
-          Modèle local · RGPD natif
-        </span>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- ════════════════════════════════════════════════════════════════ MAIN -->
-  <main class="main" id="main-content">
-
-    <!-- Zone de recherche -->
-    <section class="search-zone" aria-label="Zone de recherche">
-
-      <div class="search-box">
-        <div class="search-input-wrap">
-          <label for="search-input" class="sr-only">Requête de recherche</label>
-          <input
-            type="search"
-            id="search-input"
-            class="search-input"
-            placeholder="Code ROME ou appellation... ex: G1209"
-            aria-label="Saisissez un code ROME, une appellation ou une description de métier"
-            autocomplete="off"
-            spellcheck="false"
-          />
-          <button
-            id="btn-search"
-            class="search-btn"
-            aria-label="Lancer la recherche"
-          >Rechercher</button>
-        </div>
-
-        <!-- Loader inline -->
-        <div
-          id="loader"
-          class="loader"
-          role="status"
-          aria-live="polite"
-          aria-label="Recherche en cours"
-          hidden
-        >
-          <span class="loader__dot" aria-hidden="true"></span>
-          <span class="loader__dot" aria-hidden="true"></span>
-          <span class="loader__dot" aria-hidden="true"></span>
-        </div>
-
-        <!-- Toggle boost + options -->
-        <div class="search-options">
-          <label class="boost-toggle" aria-label="Activer le boost qualité par famille ROME">
-            <input
-              type="checkbox"
-              id="toggle-boost"
-              class="boost-toggle__input"
-              checked
-              aria-checked="true"
-            />
-            <span class="boost-toggle__track" aria-hidden="true"></span>
-            <span class="boost-toggle__label">Boost qualité</span>
-            <span class="boost-toggle__hint" aria-label="Le boost qualité amplifie les scores selon la famille ROME">?</span>
-          </label>
-          <span class="boost-tooltip" role="tooltip" id="boost-tooltip">
-            Amplifie les scores selon la famille ROME.<br>
-            Ex : J×1.2, D×1.1, H×0.85
+  <div class="page-shell">
+    <header class="site-header" role="banner">
+      <div class="site-header__inner">
+        <a href="/" class="brand" aria-label="JOB">
+          <span class="brand__mark">J</span>
+          <span class="brand__text">
+            <strong>JOB</strong>
+            <span>Recherche métier ROME × NAF</span>
           </span>
+        </a>
+
+        <div class="site-header__meta">
+          <span class="pill pill--muted">Référentiels ROME + NAF</span>
+          <span class="pill">Moteur local</span>
         </div>
       </div>
+    </header>
 
-      <!-- Suggestions rapides -->
-      <div class="chips" role="group" aria-label="Suggestions de recherche rapide">
-        <button class="chip" data-query="professeur yoga" aria-label="Rechercher : professeur yoga">professeur yoga</button>
-        <button class="chip" data-query="développeur Python" aria-label="Rechercher : développeur Python">développeur Python</button>
-        <button class="chip" data-query="boulanger artisan" aria-label="Rechercher : boulanger artisan">boulanger artisan</button>
-        <button class="chip" data-query="aide soignant" aria-label="Rechercher : aide soignant">aide soignant</button>
-        <button class="chip" data-query="mécanicien auto" aria-label="Rechercher : mécanicien auto">mécanicien auto</button>
-      </div>
+    <main class="main" id="main-content">
+      <section class="search-stage" aria-labelledby="hero-title">
+        <p class="eyebrow">Outil de qualification</p>
+        <h1 id="hero-title">Trouvez le bon code métier à partir d'une description claire.</h1>
+        <p class="search-stage__lead">
+          Décrivez un poste, une activité ou un besoin opérationnel. JOB renvoie les correspondances
+          ROME et NAF les plus pertinentes, avec leurs scores et les détails utiles pour décider.
+        </p>
 
-    </section>
+        <section class="search-panel" aria-label="Recherche métier">
+          <label for="search-input" class="sr-only">Décrire un métier ou une activité</label>
+          <div class="search-input-wrap">
+            <input
+              type="search"
+              id="search-input"
+              class="search-input"
+              placeholder="Ex. développeur Python, professeur de yoga, boulanger artisan"
+              aria-label="Décrivez un métier, un poste ou une activité"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button id="btn-search" class="search-btn" aria-label="Lancer la recherche">
+              Rechercher
+            </button>
+          </div>
 
-    <!-- Zone résultats -->
-    <section
-      id="results"
-      class="results"
-      aria-live="polite"
-      aria-atomic="false"
-      aria-label="Résultats de recherche"
+          <div
+            id="loader"
+            class="loader"
+            role="status"
+            aria-live="polite"
+            aria-label="Analyse en cours"
+            hidden
+          >
+            <span class="loader__dot" aria-hidden="true"></span>
+            <span class="loader__dot" aria-hidden="true"></span>
+            <span class="loader__dot" aria-hidden="true"></span>
+          </div>
+
+          <div class="search-toolbar">
+            <label class="toggle" aria-label="Activer l'ajustement métier du classement">
+              <input
+                type="checkbox"
+                id="toggle-boost"
+                class="toggle__input"
+                checked
+                aria-checked="true"
+              />
+              <span class="toggle__track" aria-hidden="true"></span>
+              <span class="toggle__label">
+                Priorisation métier
+                <small>ajuste le classement selon certaines familles ROME</small>
+              </span>
+            </label>
+          </div>
+
+          <div class="persona-strip" role="group" aria-label="Choisir un profil d'usage">
+            <button class="persona-chip persona-chip--active" data-persona="recruteur" aria-pressed="true">
+              Recruteur
+            </button>
+            <button class="persona-chip" data-persona="analyste" aria-pressed="false">
+              Analyste
+            </button>
+            <button class="persona-chip" data-persona="dirigeant" aria-pressed="false">
+              Dirigeant
+            </button>
+          </div>
+
+          <div class="metrics-grid" aria-label="Métriques du moteur">
+            <article class="metric-card metric-card--accent">
+              <span class="metric-card__label">Base indexée</span>
+              <strong class="metric-card__value" id="hero-count">—</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-card__label">Dernière latence</span>
+              <strong class="metric-card__value" id="hero-latency">—</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-card__label">Modèle utilisé</span>
+              <strong class="metric-card__value metric-card__value--small" id="hero-model">—</strong>
+            </article>
+            <article class="metric-card metric-card--soft">
+              <span class="metric-card__label">Statut</span>
+              <strong class="metric-card__value metric-card__value--small" id="engine-status">Prêt</strong>
+            </article>
+          </div>
+
+          <section class="persona-insights" aria-labelledby="persona-insights-title">
+            <div class="persona-insights__header">
+              <p class="eyebrow">Lecture guidée</p>
+              <h2 id="persona-insights-title">Métriques utiles pour votre profil</h2>
+            </div>
+            <div class="persona-insights__grid">
+              <article class="insight-card">
+                <span class="insight-card__label" id="insight-1-label">Priorité</span>
+                <strong class="insight-card__value" id="insight-1-value">Lancez une recherche</strong>
+                <p class="insight-card__text" id="insight-1-text">Les indicateurs se personnalisent après la première requête.</p>
+              </article>
+              <article class="insight-card">
+                <span class="insight-card__label" id="insight-2-label">Lecture</span>
+                <strong class="insight-card__value" id="insight-2-value">Aucun signal</strong>
+                <p class="insight-card__text" id="insight-2-text">Le moteur expliquera ici la qualité et la stabilité du résultat.</p>
+              </article>
+              <article class="insight-card">
+                <span class="insight-card__label" id="insight-3-label">Action</span>
+                <strong class="insight-card__value" id="insight-3-value">En attente</strong>
+                <p class="insight-card__text" id="insight-3-text">Vous verrez ici quoi faire ensuite selon le contexte du résultat.</p>
+              </article>
+            </div>
+          </section>
+
+          <div class="chips" role="group" aria-label="Exemples de recherche">
+            <button class="chip" data-query="professeur yoga">professeur yoga</button>
+            <button class="chip" data-query="développeur Python">développeur Python</button>
+            <button class="chip" data-query="cabinet de recrutement tech">cabinet de recrutement tech</button>
+            <button class="chip" data-query="boulanger artisan">boulanger artisan</button>
+            <button class="chip" data-query="mécanicien automobile">mécanicien automobile</button>
+          </div>
+        </section>
+      </section>
+
+      <section class="results-section" aria-labelledby="results-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Résultats</p>
+            <h2 id="results-title">Correspondances proposées</h2>
+          </div>
+          <div class="results-kpis">
+            <span class="results-kpis__item" id="results-summary">Aucune recherche lancée</span>
+            <span class="results-kpis__item" id="results-meta">—</span>
+          </div>
+        </div>
+
+        <section
+          id="results"
+          class="results"
+          aria-live="polite"
+          aria-atomic="false"
+          aria-label="Résultats de recherche"
+        >
+          <div class="results__empty" id="results-empty">
+            <p class="results__empty-title">La recherche commence ici.</p>
+            <p class="results__empty-text">
+              Saisissez une activité ou un métier dans la barre centrale pour obtenir les meilleurs rapprochements.
+            </p>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <div class="panel-overlay" id="panel-overlay" aria-hidden="true" tabindex="-1"></div>
+
+    <aside
+      class="detail-panel"
+      id="detail-panel"
+      role="complementary"
+      aria-label="Détail du résultat"
+      aria-hidden="true"
     >
-      <!-- Rendu dynamique par app.js -->
-      <div class="results__empty" id="results-empty">
-        <p class="results__empty-text">Lancez une recherche pour voir les correspondances ROME × NAF.</p>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ═══════════════════════════════════════════════════════ OVERLAY + ASIDE -->
-  <div class="panel-overlay" id="panel-overlay" aria-hidden="true" tabindex="-1"></div>
-
-  <aside
-    class="detail-panel"
-    id="detail-panel"
-    role="complementary"
-    aria-label="Détail du code ROME"
-    aria-hidden="true"
-  >
-    <div class="detail-panel__header">
-      <div class="detail-panel__title-group">
-        <span class="detail-panel__code-rome" id="panel-code-rome">—</span>
-        <span class="detail-panel__code-naf" id="panel-code-naf">—</span>
-      </div>
-      <button
-        class="detail-panel__close"
-        id="btn-panel-close"
-        aria-label="Fermer le panneau de détail"
-      >×</button>
-    </div>
-
-    <div class="detail-panel__body">
-      <h2 class="detail-panel__name" id="panel-name">—</h2>
-
-      <dl class="detail-meta">
-        <dt class="detail-meta__label">Famille ROME</dt>
-        <dd class="detail-meta__value" id="panel-famille">—</dd>
-
-        <dt class="detail-meta__label">Score brut</dt>
-        <dd class="detail-meta__value mono" id="panel-score-raw">—</dd>
-
-        <dt class="detail-meta__label">Score boosté</dt>
-        <dd class="detail-meta__value mono" id="panel-score">—</dd>
-
-        <dt class="detail-meta__label">Chunk</dt>
-        <dd class="detail-meta__value mono" id="panel-chunk">—</dd>
-
-        <dt class="detail-meta__label">Appellations</dt>
-        <dd class="detail-meta__value mono" id="panel-appellations">—</dd>
-      </dl>
-
-      <div class="detail-section">
-        <h3 class="detail-section__title">Codes NAF associés</h3>
-        <div class="detail-naf-list" id="panel-naf-list">—</div>
+      <div class="detail-panel__header">
+        <div class="detail-panel__title-group">
+          <span class="detail-panel__code-rome" id="panel-code-rome">—</span>
+          <span class="detail-panel__code-naf" id="panel-code-naf">—</span>
+        </div>
+        <button
+          class="detail-panel__close"
+          id="btn-panel-close"
+          aria-label="Fermer le panneau de détail"
+        >×</button>
       </div>
 
-      <div class="detail-section">
-        <h3 class="detail-section__title">Liens externes</h3>
-        <div class="detail-links">
-          <a
-            id="link-ft"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="detail-link"
-            aria-label="Voir sur France Travail (nouvelle fenêtre)"
-          >France Travail →</a>
-          <a
-            id="link-insee"
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="detail-link"
-            aria-label="Voir sur INSEE.fr (nouvelle fenêtre)"
-          >INSEE.fr →</a>
+      <div class="detail-panel__body">
+        <h2 class="detail-panel__name" id="panel-name">—</h2>
+        <p class="detail-panel__intro">Fiche synthétique pour qualifier rapidement la correspondance proposée.</p>
+
+        <dl class="detail-meta">
+          <dt class="detail-meta__label">Famille ROME</dt>
+          <dd class="detail-meta__value" id="panel-famille">—</dd>
+
+          <dt class="detail-meta__label">Score initial</dt>
+          <dd class="detail-meta__value mono" id="panel-score-raw">—</dd>
+
+          <dt class="detail-meta__label">Score final</dt>
+          <dd class="detail-meta__value mono" id="panel-score">—</dd>
+
+          <dt class="detail-meta__label">Segment retenu</dt>
+          <dd class="detail-meta__value mono" id="panel-chunk">—</dd>
+
+          <dt class="detail-meta__label">Appellations agrégées</dt>
+          <dd class="detail-meta__value mono" id="panel-appellations">—</dd>
+        </dl>
+
+        <div class="detail-section">
+          <h3 class="detail-section__title">Confiance du résultat</h3>
+          <div class="confidence-card">
+            <strong class="confidence-card__headline" id="panel-confidence-title">—</strong>
+            <p class="confidence-card__text" id="panel-confidence-text">—</p>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3 class="detail-section__title">Codes NAF associés</h3>
+          <div class="detail-naf-list" id="panel-naf-list">—</div>
+        </div>
+
+        <div class="detail-section">
+          <h3 class="detail-section__title">Descriptions NAF</h3>
+          <div class="naf-descriptions" id="panel-naf-descriptions">
+            <p class="naf-description-empty">Aucune description disponible.</p>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <h3 class="detail-section__title">Références externes</h3>
+          <div class="detail-links">
+            <a
+              id="link-ft"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="detail-link"
+              aria-label="Voir sur France Travail"
+            >France Travail</a>
+            <a
+              id="link-insee"
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="detail-link"
+              aria-label="Voir sur l'INSEE"
+            >INSEE</a>
+          </div>
+        </div>
+
+        <div class="detail-actions">
+          <button
+            id="btn-export-csv"
+            class="btn btn--secondary"
+            aria-label="Exporter les résultats au format CSV"
+          >Exporter les résultats</button>
         </div>
       </div>
 
-      <div class="detail-actions">
-        <button
-          id="btn-export-csv"
-          class="btn btn--secondary"
-          aria-label="Exporter les résultats actuels au format CSV"
-        >Exporter CSV</button>
-      </div>
-    </div>
+      <span class="focus-trap-end" tabindex="0" aria-hidden="true"></span>
+    </aside>
 
-    <!-- Focus trap anchor (invisible) -->
-    <span class="focus-trap-end" tabindex="0" aria-hidden="true"></span>
-  </aside>
-
-  <!-- ═══════════════════════════════════════════════════════════════ FOOTER -->
-  <footer class="footer" role="contentinfo">
-    <span class="footer__model" id="footer-model">paraphrase-multilingual-MiniLM-L12-v2 · local</span>
-    <span class="footer__latency" id="footer-latency" aria-live="polite" aria-label="Dernière latence de recherche">— ms</span>
-    <span class="footer__count" id="footer-count">— entrées · collection naf_rome_v2</span>
-  </footer>
+    <footer class="site-footer" role="contentinfo">
+      <span class="site-footer__item" id="footer-model">Modèle : —</span>
+      <span class="site-footer__item" id="footer-latency">Latence : —</span>
+      <span class="site-footer__item" id="footer-count">Base : —</span>
+    </footer>
+  </div>
 
   <script src="/static/app.js"></script>
 </body>
