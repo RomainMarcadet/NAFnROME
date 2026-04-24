@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JOB · ROME × NAF · Moteur sémantique</title>
+  <meta name="description" content="Moteur de recherche sémantique ROME et NAF — correspondance emploi/secteur d'activité." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════════ HEADER -->
+  <header class="header" role="banner">
+    <div class="header__inner">
+
+      <div class="header__brand">
+        <span class="header__logo" aria-label="JOB">JOB<span class="header__dot" aria-hidden="true"></span></span>
+        <span class="header__tagline">ROME × NAF · Moteur sémantique</span>
+      </div>
+
+      <div class="header__controls">
+        <!-- Toggle mode Sophie / Karim -->
+        <div class="mode-toggle" role="group" aria-label="Sélection du mode d'affichage">
+          <button
+            id="btn-mode-sophie"
+            class="mode-toggle__btn mode-toggle__btn--active"
+            aria-pressed="true"
+            aria-label="Mode Sophie : affichage expert avec codes ROME et NAF"
+            data-mode="sophie"
+          >Sophie</button>
+          <button
+            id="btn-mode-karim"
+            class="mode-toggle__btn"
+            aria-pressed="false"
+            aria-label="Mode Karim : affichage simplifié en langage courant"
+            data-mode="karim"
+          >Karim</button>
+        </div>
+
+        <!-- Badge RGPD -->
+        <span class="badge-rgpd" aria-label="Modèle local, conformité RGPD native">
+          Modèle local · RGPD natif
+        </span>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ════════════════════════════════════════════════════════════════ MAIN -->
+  <main class="main" id="main-content">
+
+    <!-- Zone de recherche -->
+    <section class="search-zone" aria-label="Zone de recherche">
+
+      <div class="search-box">
+        <div class="search-input-wrap">
+          <label for="search-input" class="sr-only">Requête de recherche</label>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Code ROME ou appellation... ex: G1209"
+            aria-label="Saisissez un code ROME, une appellation ou une description de métier"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button
+            id="btn-search"
+            class="search-btn"
+            aria-label="Lancer la recherche"
+          >Rechercher</button>
+        </div>
+
+        <!-- Loader inline -->
+        <div
+          id="loader"
+          class="loader"
+          role="status"
+          aria-live="polite"
+          aria-label="Recherche en cours"
+          hidden
+        >
+          <span class="loader__dot" aria-hidden="true"></span>
+          <span class="loader__dot" aria-hidden="true"></span>
+          <span class="loader__dot" aria-hidden="true"></span>
+        </div>
+
+        <!-- Toggle boost + options -->
+        <div class="search-options">
+          <label class="boost-toggle" aria-label="Activer le boost qualité par famille ROME">
+            <input
+              type="checkbox"
+              id="toggle-boost"
+              class="boost-toggle__input"
+              checked
+              aria-checked="true"
+            />
+            <span class="boost-toggle__track" aria-hidden="true"></span>
+            <span class="boost-toggle__label">Boost qualité</span>
+            <span class="boost-toggle__hint" aria-label="Le boost qualité amplifie les scores selon la famille ROME">?</span>
+          </label>
+          <span class="boost-tooltip" role="tooltip" id="boost-tooltip">
+            Amplifie les scores selon la famille ROME.<br>
+            Ex : J×1.2, D×1.1, H×0.85
+          </span>
+        </div>
+      </div>
+
+      <!-- Suggestions rapides -->
+      <div class="chips" role="group" aria-label="Suggestions de recherche rapide">
+        <button class="chip" data-query="professeur yoga" aria-label="Rechercher : professeur yoga">professeur yoga</button>
+        <button class="chip" data-query="développeur Python" aria-label="Rechercher : développeur Python">développeur Python</button>
+        <button class="chip" data-query="boulanger artisan" aria-label="Rechercher : boulanger artisan">boulanger artisan</button>
+        <button class="chip" data-query="aide soignant" aria-label="Rechercher : aide soignant">aide soignant</button>
+        <button class="chip" data-query="mécanicien auto" aria-label="Rechercher : mécanicien auto">mécanicien auto</button>
+      </div>
+
+    </section>
+
+    <!-- Zone résultats -->
+    <section
+      id="results"
+      class="results"
+      aria-live="polite"
+      aria-atomic="false"
+      aria-label="Résultats de recherche"
+    >
+      <!-- Rendu dynamique par app.js -->
+      <div class="results__empty" id="results-empty">
+        <p class="results__empty-text">Lancez une recherche pour voir les correspondances ROME × NAF.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════ OVERLAY + ASIDE -->
+  <div class="panel-overlay" id="panel-overlay" aria-hidden="true" tabindex="-1"></div>
+
+  <aside
+    class="detail-panel"
+    id="detail-panel"
+    role="complementary"
+    aria-label="Détail du code ROME"
+    aria-hidden="true"
+  >
+    <div class="detail-panel__header">
+      <div class="detail-panel__title-group">
+        <span class="detail-panel__code-rome" id="panel-code-rome">—</span>
+        <span class="detail-panel__code-naf" id="panel-code-naf">—</span>
+      </div>
+      <button
+        class="detail-panel__close"
+        id="btn-panel-close"
+        aria-label="Fermer le panneau de détail"
+      >×</button>
+    </div>
+
+    <div class="detail-panel__body">
+      <h2 class="detail-panel__name" id="panel-name">—</h2>
+
+      <dl class="detail-meta">
+        <dt class="detail-meta__label">Famille ROME</dt>
+        <dd class="detail-meta__value" id="panel-famille">—</dd>
+
+        <dt class="detail-meta__label">Score brut</dt>
+        <dd class="detail-meta__value mono" id="panel-score-raw">—</dd>
+
+        <dt class="detail-meta__label">Score boosté</dt>
+        <dd class="detail-meta__value mono" id="panel-score">—</dd>
+
+        <dt class="detail-meta__label">Chunk</dt>
+        <dd class="detail-meta__value mono" id="panel-chunk">—</dd>
+
+        <dt class="detail-meta__label">Appellations</dt>
+        <dd class="detail-meta__value mono" id="panel-appellations">—</dd>
+      </dl>
+
+      <div class="detail-section">
+        <h3 class="detail-section__title">Codes NAF associés</h3>
+        <div class="detail-naf-list" id="panel-naf-list">—</div>
+      </div>
+
+      <div class="detail-section">
+        <h3 class="detail-section__title">Liens externes</h3>
+        <div class="detail-links">
+          <a
+            id="link-ft"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="detail-link"
+            aria-label="Voir sur France Travail (nouvelle fenêtre)"
+          >France Travail →</a>
+          <a
+            id="link-insee"
+            href="#"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="detail-link"
+            aria-label="Voir sur INSEE.fr (nouvelle fenêtre)"
+          >INSEE.fr →</a>
+        </div>
+      </div>
+
+      <div class="detail-actions">
+        <button
+          id="btn-export-csv"
+          class="btn btn--secondary"
+          aria-label="Exporter les résultats actuels au format CSV"
+        >Exporter CSV</button>
+      </div>
+    </div>
+
+    <!-- Focus trap anchor (invisible) -->
+    <span class="focus-trap-end" tabindex="0" aria-hidden="true"></span>
+  </aside>
+
+  <!-- ═══════════════════════════════════════════════════════════════ FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <span class="footer__model" id="footer-model">paraphrase-multilingual-MiniLM-L12-v2 · local</span>
+    <span class="footer__latency" id="footer-latency" aria-live="polite" aria-label="Dernière latence de recherche">— ms</span>
+    <span class="footer__count" id="footer-count">— entrées · collection naf_rome_v2</span>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
