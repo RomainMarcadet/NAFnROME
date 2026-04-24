@@ -169,3 +169,13 @@ search_chunks_after_dedup = Gauge(
     'Nombre de documents uniques après déduplication par source_idx',
     registry=REGISTRY,
 )
+search_latency_seconds = Histogram(
+    'search_latency_seconds',
+    'Latence de l\'endpoint de recherche (encode + ChromaDB + dedup)',
+    registry=REGISTRY,
+)
+search_score_top1 = Gauge(
+    'search_score_top1',
+    'Score cosinus du résultat top-1 (après boost éventuel)',
+    registry=REGISTRY,
+)
