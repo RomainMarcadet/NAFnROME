@@ -30,3 +30,5 @@ rapidfuzz
 sentence-transformers
 chromadb
 ollama
+prometheus-client
+python-dotenv

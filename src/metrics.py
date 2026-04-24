@@ -1,4 +1,4 @@
-from prometheus_client import Gauge, Histogram, CollectorRegistry
+from prometheus_client import Counter, Gauge, Histogram, CollectorRegistry
 
 REGISTRY = CollectorRegistry()
 
@@ -83,5 +83,127 @@ naf_coverage_referenced_by_rome = Gauge(
 naf_orphan_codes_gauge = Gauge(
     'naf_orphan_codes',
     'Nombre de codes NAF non référencés par aucune ligne ROME — objectif : diminue',
+    registry=REGISTRY,
+)
+
+# ─── Métriques ingestion ChromaDB ─────────────────────────────────────────────
+
+ingestion_total_documents = Gauge(
+    'ingestion_total_documents',
+    'Nombre total de documents ingérés dans ChromaDB',
+    registry=REGISTRY,
+)
+ingestion_total_chunked = Gauge(
+    'ingestion_total_chunked',
+    'Nombre de documents ayant nécessité un chunking (> max_tokens)',
+    registry=REGISTRY,
+)
+ingestion_chunked_ratio = Gauge(
+    'ingestion_chunked_ratio',
+    'Ratio (%) de documents chunkés',
+    registry=REGISTRY,
+)
+ingestion_token_overflow_count = Gauge(
+    'ingestion_token_overflow_count',
+    'Nombre de documents dépassant max_tokens avant chunking',
+    registry=REGISTRY,
+)
+ingestion_duration_seconds = Gauge(
+    'ingestion_duration_seconds',
+    'Durée totale de l\'ingestion en secondes',
+    registry=REGISTRY,
+)
+ingestion_avg_batch_duration_ms = Gauge(
+    'ingestion_avg_batch_duration_ms',
+    'Latence moyenne par batch en millisecondes',
+    registry=REGISTRY,
+)
+ingestion_total_chunks = Gauge(
+    'ingestion_total_chunks',
+    'Nombre total d\'entrées ChromaDB générées (1 par chunk)',
+    registry=REGISTRY,
+)
+ingestion_avg_chunks_per_doc = Gauge(
+    'ingestion_avg_chunks_per_doc',
+    'Nombre moyen de chunks par document source',
+    registry=REGISTRY,
+)
+
+# ─── Métriques audit ROMEO ────────────────────────────────────────────────────
+
+romeo_concordance_full_rate = Gauge(
+    'romeo_concordance_full_rate',
+    'Taux de concordance exacte (même code_rome) avec ROMEO v2 (%)',
+    registry=REGISTRY,
+)
+romeo_concordance_partial_rate = Gauge(
+    'romeo_concordance_partial_rate',
+    'Taux de concordance famille (même lettre ROME) avec ROMEO v2 (%)',
+    registry=REGISTRY,
+)
+romeo_avg_latency_ms = Gauge(
+    'romeo_avg_latency_ms',
+    'Latence moyenne des appels API ROMEO v2 (ms)',
+    registry=REGISTRY,
+)
+our_engine_avg_latency_ms = Gauge(
+    'our_engine_avg_latency_ms',
+    'Latence moyenne de notre moteur ChromaDB (ms)',
+    registry=REGISTRY,
+)
+
+# ─── Métriques search ─────────────────────────────────────────────────────────
+
+search_family_boost_applied = Gauge(
+    'search_family_boost_applied',
+    '1.0 si le dernier appel à search() utilisait family_boost, 0.0 sinon',
+    registry=REGISTRY,
+)
+search_chunks_fetched_before_dedup = Gauge(
+    'search_chunks_fetched_before_dedup',
+    'Nombre de chunks récupérés depuis ChromaDB avant déduplication',
+    registry=REGISTRY,
+)
+search_chunks_after_dedup = Gauge(
+    'search_chunks_after_dedup',
+    'Nombre de documents uniques après déduplication par source_idx',
+    registry=REGISTRY,
+)
+search_latency_seconds = Histogram(
+    'search_latency_seconds',
+    'Latence de l\'endpoint de recherche (encode + ChromaDB + dedup)',
+    registry=REGISTRY,
+)
+search_score_top1 = Gauge(
+    'search_score_top1',
+    'Score cosinus du résultat top-1 (après boost éventuel)',
+    registry=REGISTRY,
+)
+search_results_returned = Gauge(
+    'search_results_returned',
+    'Nombre de résultats retournés par le dernier appel search()',
+    registry=REGISTRY,
+)
+search_query_token_length = Gauge(
+    'search_query_token_length',
+    'Longueur en tokens de la dernière requête envoyée à search()',
+    registry=REGISTRY,
+)
+
+# ─── Métriques HTTP par endpoint ──────────────────────────────────────────────
+
+collection_count = Gauge(
+    'collection_count',
+    'Nombre d\'entrées dans la collection ChromaDB (mis à jour au démarrage)',
+    registry=REGISTRY,
+)
+http_requests_total_rome_search = Counter(
+    'http_requests_total_rome_search',
+    'Nombre total de requêtes GET /rome/search (Sophie)',
+    registry=REGISTRY,
+)
+http_requests_total_match = Counter(
+    'http_requests_total_match',
+    'Nombre total de requêtes POST /match (Karim)',
     registry=REGISTRY,
 )

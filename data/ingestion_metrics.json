@@ -1,0 +1,15 @@
+{
+  "timestamp": "2026-04-24T07:48:44.512328+00:00",
+  "embedding_model_name": "paraphrase-multilingual-MiniLM-L12-v2",
+  "embedding_dimension": 384,
+  "collection_name": "naf_rome_v2",
+  "ingestion_total_documents": 8030,
+  "ingestion_total_chunks": 8629,
+  "ingestion_chroma_entries": 8629,
+  "ingestion_total_chunked": 395,
+  "ingestion_chunked_ratio": 4.92,
+  "ingestion_avg_chunks_per_doc": 1.075,
+  "ingestion_token_overflow_count": 395,
+  "ingestion_duration_seconds": 397.93,
+  "ingestion_avg_batch_duration_ms": 821.97
+}
