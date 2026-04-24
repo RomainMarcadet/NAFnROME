@@ -1,4 +1,4 @@
-from prometheus_client import Gauge, Histogram, CollectorRegistry
+from prometheus_client import Counter, Gauge, Histogram, CollectorRegistry
 
 REGISTRY = CollectorRegistry()
 
@@ -177,5 +177,33 @@ search_latency_seconds = Histogram(
 search_score_top1 = Gauge(
     'search_score_top1',
     'Score cosinus du résultat top-1 (après boost éventuel)',
+    registry=REGISTRY,
+)
+search_results_returned = Gauge(
+    'search_results_returned',
+    'Nombre de résultats retournés par le dernier appel search()',
+    registry=REGISTRY,
+)
+search_query_token_length = Gauge(
+    'search_query_token_length',
+    'Longueur en tokens de la dernière requête envoyée à search()',
+    registry=REGISTRY,
+)
+
+# ─── Métriques HTTP par endpoint ──────────────────────────────────────────────
+
+collection_count = Gauge(
+    'collection_count',
+    'Nombre d\'entrées dans la collection ChromaDB (mis à jour au démarrage)',
+    registry=REGISTRY,
+)
+http_requests_total_rome_search = Counter(
+    'http_requests_total_rome_search',
+    'Nombre total de requêtes GET /rome/search (Sophie)',
+    registry=REGISTRY,
+)
+http_requests_total_match = Counter(
+    'http_requests_total_match',
+    'Nombre total de requêtes POST /match (Karim)',
     registry=REGISTRY,
 )

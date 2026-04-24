@@ -29,7 +29,12 @@ from sentence_transformers import SentenceTransformer
 
 from src.metrics import (
     REGISTRY,
+    collection_count,
+    http_requests_total_match,
+    http_requests_total_rome_search,
     search_latency_seconds,
+    search_query_token_length,
+    search_results_returned,
     search_score_top1,
 )
 from src.search import search
@@ -62,6 +67,7 @@ async def lifespan(app: FastAPI):
     app.state.collection = client.get_collection(COLLECTION_NAME)
 
     n = app.state.collection.count()
+    collection_count.set(n)
     logger.info("Prêt — collection '%s' (%d entrées).", COLLECTION_NAME, n)
     yield
     # Pas de cleanup nécessaire (ChromaDB PersistentClient gère la fermeture)
@@ -88,6 +94,8 @@ def _search_response(
     # Prometheus
     search_latency_seconds.observe(latency_ms / 1000)
     search_score_top1.set(top1_score)
+    search_results_returned.set(len(results))
+    search_query_token_length.set(token_count)
 
     return {
         "query":   query,
@@ -134,6 +142,7 @@ async def rome_search(
     collection   = request.app.state.collection
     family_boost = FAMILY_BOOST if boost else None
 
+    http_requests_total_rome_search.inc()
     results, search_meta = search(
         q, model, collection, n_results=n, family_boost=family_boost
     )
@@ -205,6 +214,7 @@ async def match(request: Request, body: MatchRequest):
     collection   = request.app.state.collection
     family_boost = FAMILY_BOOST if body.boost else None
 
+    http_requests_total_match.inc()
     results, search_meta = search(
         body.query, model, collection,
         n_results=body.n, family_boost=family_boost,
