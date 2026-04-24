@@ -35,10 +35,19 @@ from src.metrics import (
     collection_count,
     http_requests_total_match,
     http_requests_total_rome_search,
+    search_latency_by_persona_seconds,
     search_latency_seconds,
+    search_query_token_length_histogram,
     search_query_token_length,
+    search_requests,
     search_results_returned,
+    search_top1_band,
+    search_top1_code_naf,
+    search_top1_code_rome,
+    search_top1_famille,
+    search_top1_score_distribution,
     search_score_top1,
+    search_zero_results,
 )
 from src.search import search
 
@@ -114,18 +123,62 @@ def _search_response(
     search_meta: dict,
     model: SentenceTransformer,
     boost_applied: bool,
+    endpoint: str,
+    persona: str,
     t0: float,
 ) -> dict:
     """Construit la réponse JSON commune à /rome/search et /match."""
     latency_ms = (time.perf_counter() - t0) * 1000
     token_count = len(model.tokenizer.encode(query, add_special_tokens=False))
     top1_score  = results[0]['score'] if results else 0.0
+    boost_label = 'true' if boost_applied else 'false'
+    persona = persona or 'unknown'
 
     # Prometheus
     search_latency_seconds.observe(latency_ms / 1000)
+    search_latency_by_persona_seconds.labels(
+        endpoint=endpoint, persona=persona
+    ).observe(latency_ms / 1000)
     search_score_top1.set(top1_score)
+    search_top1_score_distribution.labels(
+        endpoint=endpoint, persona=persona
+    ).observe(top1_score)
     search_results_returned.set(len(results))
     search_query_token_length.set(token_count)
+    search_query_token_length_histogram.observe(token_count)
+    search_requests.labels(
+        endpoint=endpoint, persona=persona, boost=boost_label
+    ).inc()
+
+    if not results:
+        search_zero_results.labels(endpoint=endpoint, persona=persona).inc()
+        band = 'none'
+    elif top1_score >= 0.8:
+        band = 'high'
+    elif top1_score >= 0.6:
+        band = 'medium'
+    else:
+        band = 'low'
+
+    search_top1_band.labels(
+        band=band, endpoint=endpoint, persona=persona
+    ).inc()
+
+    if results:
+        top = results[0]
+        search_top1_code_rome.labels(
+            code_rome=top.get('code_rome', '') or 'NAF',
+            name=top.get('name', '') or 'NAF',
+            persona=persona,
+        ).inc()
+        search_top1_code_naf.labels(
+            code_naf=top.get('code_naf', '') or 'unknown',
+            persona=persona,
+        ).inc()
+        search_top1_famille.labels(
+            famille=top.get('famille', '') or 'unknown',
+            persona=persona,
+        ).inc()
 
     return {
         "query":   query,
@@ -181,7 +234,10 @@ async def rome_search(
     results, search_meta = search(
         q, model, collection, n_results=n, family_boost=family_boost
     )
-    return _search_response(q, results, search_meta, model, boost, t0)
+    return _search_response(
+        q, results, search_meta, model, boost,
+        endpoint='/rome/search', persona='direct', t0=t0,
+    )
 
 
 @app.get("/rome/{code}")
@@ -244,6 +300,7 @@ class MatchRequest(BaseModel):
     query: str
     n:     int  = 5
     boost: bool = False
+    persona: str = 'recruteur'
 
 
 @app.post("/match")
@@ -263,7 +320,10 @@ async def match(request: Request, body: MatchRequest):
         body.query, model, collection,
         n_results=body.n, family_boost=family_boost,
     )
-    return _search_response(body.query, results, search_meta, model, body.boost, t0)
+    return _search_response(
+        body.query, results, search_meta, model, body.boost,
+        endpoint='/match', persona=body.persona, t0=t0,
+    )
 
 
 @app.get("/metrics")

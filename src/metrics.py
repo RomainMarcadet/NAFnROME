@@ -189,6 +189,61 @@ search_query_token_length = Gauge(
     'Longueur en tokens de la dernière requête envoyée à search()',
     registry=REGISTRY,
 )
+search_requests = Counter(
+    'search_requests',
+    'Nombre total de recherches exécutées, ventilées par endpoint/persona/boost',
+    ['endpoint', 'persona', 'boost'],
+    registry=REGISTRY,
+)
+search_zero_results = Counter(
+    'search_zero_results',
+    'Nombre total de recherches ne retournant aucun résultat',
+    ['endpoint', 'persona'],
+    registry=REGISTRY,
+)
+search_top1_band = Counter(
+    'search_top1_band',
+    'Répartition des bandes de confiance du résultat top-1',
+    ['band', 'endpoint', 'persona'],
+    registry=REGISTRY,
+)
+search_top1_code_rome = Counter(
+    'search_top1_code_rome',
+    'Nombre de fois où un code ROME ressort en top-1',
+    ['code_rome', 'name', 'persona'],
+    registry=REGISTRY,
+)
+search_top1_code_naf = Counter(
+    'search_top1_code_naf',
+    'Nombre de fois où un code NAF ressort en top-1',
+    ['code_naf', 'persona'],
+    registry=REGISTRY,
+)
+search_top1_famille = Counter(
+    'search_top1_famille',
+    'Nombre de fois où une famille ROME ressort en top-1',
+    ['famille', 'persona'],
+    registry=REGISTRY,
+)
+search_latency_by_persona_seconds = Histogram(
+    'search_latency_by_persona_seconds',
+    'Latence de recherche ventilée par endpoint/persona',
+    ['endpoint', 'persona'],
+    registry=REGISTRY,
+)
+search_query_token_length_histogram = Histogram(
+    'search_query_token_length_histogram',
+    'Distribution de la taille des requêtes en tokens',
+    buckets=(1, 2, 4, 8, 16, 24, 32, 48, 64, 96, 128, 256),
+    registry=REGISTRY,
+)
+search_top1_score_distribution = Histogram(
+    'search_top1_score_distribution',
+    'Distribution des scores du résultat top-1',
+    ['endpoint', 'persona'],
+    buckets=(0.0, 0.2, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0),
+    registry=REGISTRY,
+)
 
 # ─── Métriques HTTP par endpoint ──────────────────────────────────────────────
 

@@ -231,7 +231,7 @@ async function search(query) {
     const res = await fetch('/match', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ query, n: 5, boost: state.boost }),
+      body: JSON.stringify({ query, n: 5, boost: state.boost, persona: state.persona }),
     });
 
     if (!res.ok) {
