@@ -118,3 +118,54 @@ ingestion_avg_batch_duration_ms = Gauge(
     'Latence moyenne par batch en millisecondes',
     registry=REGISTRY,
 )
+ingestion_total_chunks = Gauge(
+    'ingestion_total_chunks',
+    'Nombre total d\'entrées ChromaDB générées (1 par chunk)',
+    registry=REGISTRY,
+)
+ingestion_avg_chunks_per_doc = Gauge(
+    'ingestion_avg_chunks_per_doc',
+    'Nombre moyen de chunks par document source',
+    registry=REGISTRY,
+)
+
+# ─── Métriques audit ROMEO ────────────────────────────────────────────────────
+
+romeo_concordance_full_rate = Gauge(
+    'romeo_concordance_full_rate',
+    'Taux de concordance exacte (même code_rome) avec ROMEO v2 (%)',
+    registry=REGISTRY,
+)
+romeo_concordance_partial_rate = Gauge(
+    'romeo_concordance_partial_rate',
+    'Taux de concordance famille (même lettre ROME) avec ROMEO v2 (%)',
+    registry=REGISTRY,
+)
+romeo_avg_latency_ms = Gauge(
+    'romeo_avg_latency_ms',
+    'Latence moyenne des appels API ROMEO v2 (ms)',
+    registry=REGISTRY,
+)
+our_engine_avg_latency_ms = Gauge(
+    'our_engine_avg_latency_ms',
+    'Latence moyenne de notre moteur ChromaDB (ms)',
+    registry=REGISTRY,
+)
+
+# ─── Métriques search ─────────────────────────────────────────────────────────
+
+search_family_boost_applied = Gauge(
+    'search_family_boost_applied',
+    '1.0 si le dernier appel à search() utilisait family_boost, 0.0 sinon',
+    registry=REGISTRY,
+)
+search_chunks_fetched_before_dedup = Gauge(
+    'search_chunks_fetched_before_dedup',
+    'Nombre de chunks récupérés depuis ChromaDB avant déduplication',
+    registry=REGISTRY,
+)
+search_chunks_after_dedup = Gauge(
+    'search_chunks_after_dedup',
+    'Nombre de documents uniques après déduplication par source_idx',
+    registry=REGISTRY,
+)

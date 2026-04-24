@@ -1,0 +1,717 @@
+{
+  "timestamp": "2026-04-23T22:51:46.550508+00:00",
+  "model_used": "paraphrase-multilingual-MiniLM-L12-v2",
+  "concordance_full_rate": 0.3333,
+  "concordance_partial_rate": 0.5333,
+  "romeo_avg_score": 0.8703,
+  "our_avg_score": 0.866,
+  "romeo_avg_latency_ms": 468.0,
+  "our_avg_latency_ms": 67.4,
+  "results": [
+    {
+      "query": "professeur de yoga",
+      "contexte": "Enseignement de disciplines sportives",
+      "romeo_top3": [
+        {
+          "codeRome": "G1209",
+          "libelleRome": "Animateur / Animatrice de loisirs sportifs",
+          "libelleAppellation": "Professeur / Professeure de yoga",
+          "scorePrediction": 0.863
+        },
+        {
+          "codeRome": "G1204",
+          "libelleRome": "Educateur sportif / Educatrice sportive",
+          "libelleAppellation": "Professeur / Professeure d'activités sportives",
+          "scorePrediction": 0.819
+        },
+        {
+          "codeRome": "G1217",
+          "libelleRome": "Moniteur / Monitrice en salle de sport",
+          "libelleAppellation": "Coach sportif",
+          "scorePrediction": 0.758
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "96.04Z",
+          "code_rome": "G1209",
+          "name": "Animateur / Animatrice de loisirs sportifs",
+          "score": 0.8848
+        },
+        {
+          "code_naf": "01.12Z",
+          "code_rome": "K1105",
+          "name": "Art thérapeute",
+          "score": 0.8151
+        },
+        {
+          "code_naf": "86.22B",
+          "code_rome": "L1211",
+          "name": "Chorégraphe",
+          "score": 0.7897
+        }
+      ],
+      "match": "FULL",
+      "romeo_latency_ms": 439.3,
+      "notre_latency_ms": 322.6
+    },
+    {
+      "query": "boulanger artisan",
+      "contexte": "Boulangerie et boulangerie-pâtisserie",
+      "romeo_top3": [
+        {
+          "codeRome": "D1102",
+          "libelleRome": "Boulanger / Boulangère",
+          "libelleAppellation": "Ouvrier boulanger / Ouvrière boulangère",
+          "scorePrediction": 0.802
+        },
+        {
+          "codeRome": "D1102",
+          "libelleRome": "Boulanger / Boulangère",
+          "libelleAppellation": "Boulanger / Boulangère",
+          "scorePrediction": 0.801
+        },
+        {
+          "codeRome": "D1102",
+          "libelleRome": "Boulanger / Boulangère",
+          "libelleAppellation": "Boulanger-pâtissier / Boulangère-pâtissière",
+          "scorePrediction": 0.789
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "58.21Z",
+          "code_rome": "H3303",
+          "name": "Cuisinier / Cuisinière en industrie chimique",
+          "score": 0.8453
+        },
+        {
+          "code_naf": "56.10B",
+          "code_rome": "H2503",
+          "name": "Responsable d'îlot de production",
+          "score": 0.8449
+        },
+        {
+          "code_naf": "56.10C",
+          "code_rome": "H2207",
+          "name": "Ebéniste",
+          "score": 0.8417
+        }
+      ],
+      "match": "NO_MATCH",
+      "romeo_latency_ms": 320.5,
+      "notre_latency_ms": 71.5
+    },
+    {
+      "query": "développeur Python",
+      "contexte": "Programmation informatique",
+      "romeo_top3": [
+        {
+          "codeRome": "E1410",
+          "libelleRome": "Responsable programmatique",
+          "libelleAppellation": "Expert / Experte programmatique",
+          "scorePrediction": 0.69
+        },
+        {
+          "codeRome": "M1867",
+          "libelleRome": "Responsable des systèmes d'information (SI)",
+          "libelleAppellation": "Responsable analyse programmation",
+          "scorePrediction": 0.671
+        },
+        {
+          "codeRome": "E1410",
+          "libelleRome": "Responsable programmatique",
+          "libelleAppellation": "Trader programmatique",
+          "scorePrediction": 0.667
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "62.01Z",
+          "code_rome": "M1805",
+          "name": "Développeur / Développeuse informatique",
+          "score": 0.7484
+        },
+        {
+          "code_naf": "85.59B",
+          "code_rome": "M1805",
+          "name": "Développeur / Développeuse informatique",
+          "score": 0.7432
+        },
+        {
+          "code_naf": "01.27Z",
+          "code_rome": "M1853",
+          "name": "Chef / Cheffe de projet étude et développement informatique",
+          "score": 0.7404
+        }
+      ],
+      "match": "NO_MATCH",
+      "romeo_latency_ms": 266.5,
+      "notre_latency_ms": 40.1
+    },
+    {
+      "query": "infirmier urgences",
+      "contexte": "Activités hospitalières",
+      "romeo_top3": [
+        {
+          "codeRome": "J1127",
+          "libelleRome": "Médecin urgentiste",
+          "libelleAppellation": "Médecin urgentiste",
+          "scorePrediction": 0.872
+        },
+        {
+          "codeRome": "J1305",
+          "libelleRome": "Ambulancier / Ambulancière",
+          "libelleAppellation": "Ambulancier / Ambulancière urgentiste",
+          "scorePrediction": 0.836
+        },
+        {
+          "codeRome": "J1305",
+          "libelleRome": "Ambulancier / Ambulancière",
+          "libelleAppellation": "Ambulancier hospitalier / Ambulancière hospitalière",
+          "scorePrediction": 0.827
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "86.21Z",
+          "code_rome": "",
+          "name": "Activité des médecins généralistes",
+          "score": 0.8035
+        },
+        {
+          "code_naf": "86.21Z",
+          "code_rome": "J1512",
+          "name": "Infirmier / Infirmière de santé au travail",
+          "score": 0.8026
+        },
+        {
+          "code_naf": "41.10B",
+          "code_rome": "J1512",
+          "name": "Infirmier / Infirmière de santé au travail",
+          "score": 0.7999
+        }
+      ],
+      "match": "NO_MATCH",
+      "romeo_latency_ms": 1176.5,
+      "notre_latency_ms": 87.8
+    },
+    {
+      "query": "chauffeur poids lourd",
+      "contexte": "Transports routiers de fret",
+      "romeo_top3": [
+        {
+          "codeRome": "N4101",
+          "libelleRome": "Conducteur / Conductrice de poids lourd",
+          "libelleAppellation": "Conducteur / Conductrice de poids lourd",
+          "scorePrediction": 0.945
+        },
+        {
+          "codeRome": "N4101",
+          "libelleRome": "Conducteur / Conductrice de poids lourd",
+          "libelleAppellation": "Chauffeur / Chauffeuse de poids lourd",
+          "scorePrediction": 0.882
+        },
+        {
+          "codeRome": "I1613",
+          "libelleRome": "Mécanicien / Mécanicienne des véhicules des transports routiers",
+          "libelleAppellation": "Mécanicien / Mécanicienne poids lourds",
+          "scorePrediction": 0.855
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "49.41C",
+          "code_rome": "N4101",
+          "name": "Conducteur / Conductrice de poids lourd",
+          "score": 0.9048
+        },
+        {
+          "code_naf": "49.41C",
+          "code_rome": "N4111",
+          "name": "Conducteur / Conductrice super poids lourd de l'armée",
+          "score": 0.9
+        },
+        {
+          "code_naf": "49.39A",
+          "code_rome": "N4101",
+          "name": "Conducteur / Conductrice de poids lourd",
+          "score": 0.8742
+        }
+      ],
+      "match": "FULL",
+      "romeo_latency_ms": 376.4,
+      "notre_latency_ms": 31.4
+    },
+    {
+      "query": "boucher",
+      "contexte": "Commerce de détail de viandes",
+      "romeo_top3": [
+        {
+          "codeRome": "D1106",
+          "libelleRome": "Vendeur / Vendeuse en épicerie",
+          "libelleAppellation": "Vendeur / Vendeuse en boucherie",
+          "scorePrediction": 0.87
+        },
+        {
+          "codeRome": "D1106",
+          "libelleRome": "Vendeur / Vendeuse en épicerie",
+          "libelleAppellation": "Vendeur / Vendeuse en boucherie-charcuterie",
+          "scorePrediction": 0.845
+        },
+        {
+          "codeRome": "D1210",
+          "libelleRome": "Vendeur / Vendeuse en animalerie",
+          "libelleAppellation": "Vendeur / Vendeuse en alimentation animale",
+          "scorePrediction": 0.812
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "47.22Z",
+          "code_rome": "H2103",
+          "name": "Opérateur / Opératrice de transformation des viandes",
+          "score": 0.8451
+        },
+        {
+          "code_naf": "46.32A",
+          "code_rome": "H2103",
+          "name": "Opérateur / Opératrice de transformation des viandes",
+          "score": 0.8398
+        },
+        {
+          "code_naf": "10.31Z",
+          "code_rome": "A1411",
+          "name": "Eleveur / Eleveuse de porcins",
+          "score": 0.8398
+        }
+      ],
+      "match": "NO_MATCH",
+      "romeo_latency_ms": 350.0,
+      "notre_latency_ms": 71.5
+    },
+    {
+      "query": "comptable",
+      "contexte": "Activités comptables",
+      "romeo_top3": [
+        {
+          "codeRome": "M1203",
+          "libelleRome": "Comptable",
+          "libelleAppellation": "Comptable",
+          "scorePrediction": 1.0
+        },
+        {
+          "codeRome": "M1203",
+          "libelleRome": "Comptable",
+          "libelleAppellation": "Gestionnaire comptable",
+          "scorePrediction": 0.927
+        },
+        {
+          "codeRome": "M1203",
+          "libelleRome": "Comptable",
+          "libelleAppellation": "Comptable analytique",
+          "scorePrediction": 0.913
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "56.29A",
+          "code_rome": "M1206",
+          "name": "Responsable comptabilité",
+          "score": 0.9006
+        },
+        {
+          "code_naf": "23.52Z",
+          "code_rome": "M1206",
+          "name": "Responsable comptabilité",
+          "score": 0.8872
+        },
+        {
+          "code_naf": "63.99Z",
+          "code_rome": "M1202",
+          "name": "Auditeur comptable et financier / Auditrice comptable et financière",
+          "score": 0.8751
+        }
+      ],
+      "match": "PARTIAL",
+      "romeo_latency_ms": 284.8,
+      "notre_latency_ms": 34.6
+    },
+    {
+      "query": "plombier chauffagiste",
+      "contexte": "Travaux d'installation",
+      "romeo_top3": [
+        {
+          "codeRome": "F1620",
+          "libelleRome": "Installateur / Installatrice chauffage et climatisation",
+          "libelleAppellation": "Plombier / Plombière chauffagiste",
+          "scorePrediction": 0.834
+        },
+        {
+          "codeRome": "I1308",
+          "libelleRome": "Chauffagiste",
+          "libelleAppellation": "Chauffagiste",
+          "scorePrediction": 0.812
+        },
+        {
+          "codeRome": "I1308",
+          "libelleRome": "Chauffagiste",
+          "libelleAppellation": "Artisan / Artisane chauffagiste",
+          "scorePrediction": 0.809
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "56.10C",
+          "code_rome": "F1603",
+          "name": "Plombier / Plombière sanitaire",
+          "score": 0.9045
+        },
+        {
+          "code_naf": "88.10A",
+          "code_rome": "F1603",
+          "name": "Plombier / Plombière sanitaire",
+          "score": 0.891
+        },
+        {
+          "code_naf": "46.73B",
+          "code_rome": "F1603",
+          "name": "Plombier / Plombière sanitaire",
+          "score": 0.8283
+        }
+      ],
+      "match": "PARTIAL",
+      "romeo_latency_ms": 183.7,
+      "notre_latency_ms": 66.5
+    },
+    {
+      "query": "agent immobilier",
+      "contexte": "Agences immobilières",
+      "romeo_top3": [
+        {
+          "codeRome": "C1504",
+          "libelleRome": "Conseiller / Conseillère immobilier",
+          "libelleAppellation": "Agent / Agente immobilier",
+          "scorePrediction": 0.967
+        },
+        {
+          "codeRome": "C1504",
+          "libelleRome": "Conseiller / Conseillère immobilier",
+          "libelleAppellation": "Agent commercial / Agente commerciale en immobilier",
+          "scorePrediction": 0.87
+        },
+        {
+          "codeRome": "C1505",
+          "libelleRome": "Responsable d'agence immobilière",
+          "libelleAppellation": "Responsable d'agence immobilière",
+          "scorePrediction": 0.847
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "66.22Z",
+          "code_rome": "C1504",
+          "name": "Conseiller / Conseillère immobilier",
+          "score": 0.9112
+        },
+        {
+          "code_naf": "41.10A",
+          "code_rome": "C1502",
+          "name": "Chargé / Chargée de gestion locative en immobilier",
+          "score": 0.9101
+        },
+        {
+          "code_naf": "41.10A",
+          "code_rome": "C1504",
+          "name": "Conseiller / Conseillère immobilier",
+          "score": 0.9088
+        }
+      ],
+      "match": "FULL",
+      "romeo_latency_ms": 321.3,
+      "notre_latency_ms": 28.6
+    },
+    {
+      "query": "cuisinier restaurant",
+      "contexte": "Restauration traditionnelle",
+      "romeo_top3": [
+        {
+          "codeRome": "G1609",
+          "libelleRome": "Cuisinier / Cuisinière",
+          "libelleAppellation": "Cuisinier / Cuisinière",
+          "scorePrediction": 0.912
+        },
+        {
+          "codeRome": "G1803",
+          "libelleRome": "Serveur / Serveuse en restauration",
+          "libelleAppellation": "Commis / Commise de restaurant",
+          "scorePrediction": 0.884
+        },
+        {
+          "codeRome": "G1413",
+          "libelleRome": "Directeur / Directrice de restaurant",
+          "libelleAppellation": "Responsable de restaurant",
+          "scorePrediction": 0.874
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "56.10B",
+          "code_rome": "H2503",
+          "name": "Responsable d'îlot de production",
+          "score": 0.8826
+        },
+        {
+          "code_naf": "10.71B",
+          "code_rome": "G1409",
+          "name": "Manager en restauration rapide",
+          "score": 0.8759
+        },
+        {
+          "code_naf": "10.71C",
+          "code_rome": "G1609",
+          "name": "Cuisinier / Cuisinière",
+          "score": 0.8588
+        }
+      ],
+      "match": "NO_MATCH",
+      "romeo_latency_ms": 212.7,
+      "notre_latency_ms": 34.4
+    },
+    {
+      "query": "électricien bâtiment",
+      "contexte": "Travaux d'installation électrique",
+      "romeo_top3": [
+        {
+          "codeRome": "F1201",
+          "libelleRome": "Conducteur / Conductrice de travaux du bâtiment",
+          "libelleAppellation": "Conducteur / Conductrice de travaux en électricité",
+          "scorePrediction": 0.823
+        },
+        {
+          "codeRome": "I1324",
+          "libelleRome": "Technicien / Technicienne d'installation d'équipements industriels",
+          "libelleAppellation": "Electrotechnicien / Electrotechnicienne d'installation",
+          "scorePrediction": 0.815
+        },
+        {
+          "codeRome": "I1305",
+          "libelleRome": "Technicien / Technicienne installation et maintenance électronique",
+          "libelleAppellation": "Electronicien / Electronicienne d'installation",
+          "scorePrediction": 0.809
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "58.21Z",
+          "code_rome": "F1602",
+          "name": "Electricien / Electricienne du bâtiment",
+          "score": 0.9398
+        },
+        {
+          "code_naf": "41.10C",
+          "code_rome": "F1602",
+          "name": "Electricien / Electricienne du bâtiment",
+          "score": 0.9358
+        },
+        {
+          "code_naf": "27.32Z",
+          "code_rome": "F1602",
+          "name": "Electricien / Electricienne du bâtiment",
+          "score": 0.9343
+        }
+      ],
+      "match": "PARTIAL",
+      "romeo_latency_ms": 302.9,
+      "notre_latency_ms": 33.6
+    },
+    {
+      "query": "aide soignant",
+      "contexte": "Hébergement médicalisé",
+      "romeo_top3": [
+        {
+          "codeRome": "J1501",
+          "libelleRome": "Aide-soignant / Aide-soignante",
+          "libelleAppellation": "Aide-soignant / Aide-soignante",
+          "scorePrediction": 0.832
+        },
+        {
+          "codeRome": "K1302",
+          "libelleRome": "Assistant / Assistante de vie dépendance",
+          "libelleAppellation": "Aide aux personnes âgées",
+          "scorePrediction": 0.782
+        },
+        {
+          "codeRome": "J1501",
+          "libelleRome": "Aide-soignant / Aide-soignante",
+          "libelleAppellation": "Aide-soignant / Aide-soignante à domicile",
+          "scorePrediction": 0.781
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "86.21Z",
+          "code_rome": "K1402",
+          "name": "Médecin conseil",
+          "score": 0.8743
+        },
+        {
+          "code_naf": "86.22C",
+          "code_rome": "K1402",
+          "name": "Médecin conseil",
+          "score": 0.8698
+        },
+        {
+          "code_naf": "84.12Z",
+          "code_rome": "K1402",
+          "name": "Médecin conseil",
+          "score": 0.8436
+        }
+      ],
+      "match": "NO_MATCH",
+      "romeo_latency_ms": 666.1,
+      "notre_latency_ms": 59.5
+    },
+    {
+      "query": "commercial B2B",
+      "contexte": "Conseil pour les affaires",
+      "romeo_top3": [
+        {
+          "codeRome": "C1203",
+          "libelleRome": "Chargé / Chargée d'affaires bancaires entreprise",
+          "libelleAppellation": "Attaché commercial / Attachée commerciale banque d'affaires",
+          "scorePrediction": 0.773
+        },
+        {
+          "codeRome": "F1135",
+          "libelleRome": "Chargé / Chargée d'affaires BTP",
+          "libelleAppellation": "Ingénieur commercial / Ingénieure commerciale BTP",
+          "scorePrediction": 0.772
+        },
+        {
+          "codeRome": "D1416",
+          "libelleRome": "Commercial / Commerciale auprès d'une clientèle d'entreprises",
+          "libelleAppellation": "Conseiller commercial / Conseillère commerciale auprès d'une clientèle d'entreprises",
+          "scorePrediction": 0.758
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "95.12Z",
+          "code_rome": "D1410",
+          "name": "Attaché commercial / Attachée commerciale",
+          "score": 0.716
+        },
+        {
+          "code_naf": "58.21Z",
+          "code_rome": "D1410",
+          "name": "Attaché commercial / Attachée commerciale",
+          "score": 0.7135
+        },
+        {
+          "code_naf": "52.10B",
+          "code_rome": "D1410",
+          "name": "Attaché commercial / Attachée commerciale",
+          "score": 0.6933
+        }
+      ],
+      "match": "NO_MATCH",
+      "romeo_latency_ms": 1542.2,
+      "notre_latency_ms": 56.1
+    },
+    {
+      "query": "data scientist",
+      "contexte": "Programmation informatique",
+      "romeo_top3": [
+        {
+          "codeRome": "M1405",
+          "libelleRome": "Data scientist",
+          "libelleAppellation": "Data scientist",
+          "scorePrediction": 1.0
+        },
+        {
+          "codeRome": "M1405",
+          "libelleRome": "Data scientist",
+          "libelleAppellation": "Ingénieur / Ingénieure data scientist",
+          "scorePrediction": 0.954
+        },
+        {
+          "codeRome": "M1405",
+          "libelleRome": "Data scientist",
+          "libelleAppellation": "Expert / Experte en sciences des données",
+          "scorePrediction": 0.868
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "58.14Z",
+          "code_rome": "M1405",
+          "name": "Data scientist",
+          "score": 0.9535
+        },
+        {
+          "code_naf": "58.14Z",
+          "code_rome": "M1811",
+          "name": "Data engineer",
+          "score": 0.9497
+        },
+        {
+          "code_naf": "47.22Z",
+          "code_rome": "M1405",
+          "name": "Data scientist",
+          "score": 0.9277
+        }
+      ],
+      "match": "FULL",
+      "romeo_latency_ms": 211.2,
+      "notre_latency_ms": 34.8
+    },
+    {
+      "query": "mécanicien auto",
+      "contexte": "Entretien et réparation de véhicules",
+      "romeo_top3": [
+        {
+          "codeRome": "I1604",
+          "libelleRome": "Mécanicien / Mécanicienne automobile",
+          "libelleAppellation": "Mécanicien / Mécanicienne d'entretien en automobile",
+          "scorePrediction": 0.871
+        },
+        {
+          "codeRome": "I1604",
+          "libelleRome": "Mécanicien / Mécanicienne automobile",
+          "libelleAppellation": "Mécanicien / Mécanicienne de maintenance automobile",
+          "scorePrediction": 0.868
+        },
+        {
+          "codeRome": "I1604",
+          "libelleRome": "Mécanicien / Mécanicienne automobile",
+          "libelleAppellation": "Technicien / Technicienne en maintenance automobile",
+          "scorePrediction": 0.865
+        }
+      ],
+      "notre_top3": [
+        {
+          "code_naf": "58.13Z",
+          "code_rome": "I1604",
+          "name": "Mécanicien / Mécanicienne automobile",
+          "score": 0.8752
+        },
+        {
+          "code_naf": "77.11B",
+          "code_rome": "I1611",
+          "name": "Préparateur / Préparatrice de véhicules automobiles",
+          "score": 0.8689
+        },
+        {
+          "code_naf": "69.10Z",
+          "code_rome": "H1506",
+          "name": "Contrôleur / Contrôleuse technique en métallurgie",
+          "score": 0.8577
+        }
+      ],
+      "match": "FULL",
+      "romeo_latency_ms": 366.0,
+      "notre_latency_ms": 37.6
+    }
+  ]
+}
